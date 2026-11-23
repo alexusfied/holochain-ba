@@ -1,0 +1,26 @@
+[profile.dev]
+opt-level = "z"
+
+[profile.release]
+opt-level = "z"
+
+[workspace]
+members = ["dnas/*/zomes/coordinator/*", "dnas/*/zomes/integrity/*"]
+resolver = "2"
+
+[workspace.dependencies]
+hdi = "=0.7.3"
+hdk = "=0.6.3"
+holochain_serialized_bytes = "*"
+serde = "1.0"
+tokio = "1.49"
+
+[workspace.dependencies.event]
+path = "dnas/holochain_ba/zomes/coordinator/event"
+
+[workspace.dependencies.event_integrity]
+path = "dnas/holochain_ba/zomes/integrity/event"
+
+[workspace.dependencies.holochain]
+default-features = false
+version = "0.6.3"

@@ -1,0 +1,17 @@
+manifest_version: '0'
+name: holochain_ba
+integrity:
+  network_seed: null
+  properties: null
+  zomes:
+  - name: event_integrity
+    hash: null
+    path: ../../../target/wasm32-unknown-unknown/release/event_integrity.wasm
+    dependencies: null
+coordinator:
+  zomes:
+  - name: event
+    hash: null
+    path: ../../../target/wasm32-unknown-unknown/release/event.wasm
+    dependencies:
+    - name: event_integrity
