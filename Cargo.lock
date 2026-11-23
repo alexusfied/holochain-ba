@@ -1822,6 +1822,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "event"
+version = "0.0.1"
+dependencies = [
+ "event_integrity",
+ "hdk",
+ "holochain",
+ "holochain_serialized_bytes",
+ "pkcs8 0.11.0-rc.11",
+ "serde",
+ "tokio",
+]
+
+[[package]]
 name = "event-listener"
 version = "5.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1839,6 +1852,15 @@ checksum = "8be9f3dfaaffdae2972880079a491a1a8bb7cbed0b8dd7a347f668b4150a3b93"
 dependencies = [
  "event-listener",
  "pin-project-lite",
+]
+
+[[package]]
+name = "event_integrity"
+version = "0.0.1"
+dependencies = [
+ "hdi",
+ "holochain_serialized_bytes",
+ "serde",
 ]
 
 [[package]]
@@ -2586,28 +2608,6 @@ dependencies = [
  "uuid",
  "wasmer",
  "wasmer-middlewares",
-]
-
-[[package]]
-name = "holochain_ba"
-version = "0.0.1"
-dependencies = [
- "hdk",
- "holochain",
- "holochain_ba_integrity",
- "holochain_serialized_bytes",
- "pkcs8 0.11.0-rc.11",
- "serde",
- "tokio",
-]
-
-[[package]]
-name = "holochain_ba_integrity"
-version = "0.0.1"
-dependencies = [
- "hdi",
- "holochain_serialized_bytes",
- "serde",
 ]
 
 [[package]]

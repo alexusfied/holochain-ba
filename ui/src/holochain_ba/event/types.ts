@@ -37,4 +37,11 @@ export type EventSignal = {
   link_type: string;
 };
 
-export type EntryTypes = {};
+/* dprint-ignore-start */
+export type EntryTypes =
+ | ({  type: 'Event'; } & Event);
+/* dprint-ignore-end */
+
+export interface Event {
+  event_identifier: string;
+}
