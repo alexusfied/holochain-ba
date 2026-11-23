@@ -1,20 +1,24 @@
 use hdi::prelude::*;
 
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 struct EventIdentifier {
     event_identifier_type: String,
     event_identifier_value: String,
 }
 
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 struct EventDetailInformation {
     event_detail: String,
     event_detail_extension: String,
 }
 
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 struct EventOutcomeDetail {
     event_outcome_detail_note: String,
     event_outcome_detail_extension: String,
 }
 
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 struct EventOutcomeInformation {
     event_outcome: String,
     event_outcome_detail: EventOutcomeDetail
@@ -25,11 +29,15 @@ struct EventOutcomeInformation {
 pub struct Event {
     pub event_identifier: EventIdentifier,
     pub event_type: String,
-    pub event_date_time: Timestamp,
-    pub event_detail_information: EventDetailInformation,
-    pub event_outcome_information: EventOutcomeInformation,
-    pub linking_agent_identifier: String,
-    pub linking_object_identifier: String,
+    pub event_date_time: String,
+    #[serde(default)]
+    pub event_detail_information: Vec<EventDetailInformation>,
+    #[serde(default)]
+    pub event_outcome_information: Vec<EventOutcomeInformation>,
+    #[serde(default)]
+    pub linking_agent_identifier: Vec<String>,
+    #[serde(default)]
+    pub linking_object_identifier: Vec<String>,
 }
 
 pub fn validate_create_event(
