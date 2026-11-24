@@ -1,3 +1,4 @@
+pub mod all_events;
 pub mod event;
 use event_integrity::*;
 use hdk::prelude::*;
@@ -24,6 +25,15 @@ pub enum Signal {
     EntryDeleted {
         action: SignedActionHashed,
         original_app_entry: EntryTypes,
+    },
+    LinkCreated {
+        action: SignedActionHashed,
+        link_type: LinkTypes,
+    },
+    LinkDeleted {
+        action: SignedActionHashed,
+        create_link_action: SignedActionHashed,
+        link_type: LinkTypes,
     },
 }
 
@@ -69,6 +79,38 @@ fn signal_action(action: SignedActionHashed) -> ExternResult<()> {
                 })?;
             }
             Ok(())
+        }
+        Action::CreateLink(create_link) => {
+            if let Ok(Some(link_type)) =
+                LinkTypes::from_type(create_link.zome_index, create_link.link_type)
+            {
+                emit_signal(Signal::LinkCreated { action, link_type })?;
+            }
+            Ok(())
+        }
+        Action::DeleteLink(delete_link) => {
+            let record = get(delete_link.link_add_address.clone(), GetOptions::default())?.ok_or(
+                wasm_error!(WasmErrorInner::Guest(
+                    "Failed to fetch CreateLink action".to_string()
+                )),
+            )?;
+            match record.action() {
+                Action::CreateLink(create_link) => {
+                    if let Ok(Some(link_type)) =
+                        LinkTypes::from_type(create_link.zome_index, create_link.link_type)
+                    {
+                        emit_signal(Signal::LinkDeleted {
+                            action,
+                            link_type,
+                            create_link_action: record.signed_action.clone(),
+                        })?;
+                    }
+                    Ok(())
+                }
+                _ => Err(wasm_error!(WasmErrorInner::Guest(
+                    "Create Link should exist".to_string()
+                ))),
+            }
         }
         _ => Ok(()),
     }
