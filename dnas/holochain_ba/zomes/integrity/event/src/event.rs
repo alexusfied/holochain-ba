@@ -1,27 +1,41 @@
 use hdi::prelude::*;
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
-struct EventIdentifier {
+pub struct EventIdentifier {
     event_identifier_type: String,
     event_identifier_value: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
-struct EventDetailInformation {
+pub struct EventDetailInformation {
     event_detail: String,
     event_detail_extension: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
-struct EventOutcomeDetail {
+pub struct EventOutcomeDetail {
     event_outcome_detail_note: String,
     event_outcome_detail_extension: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
-struct EventOutcomeInformation {
+pub struct EventOutcomeInformation {
     event_outcome: String,
     event_outcome_detail: EventOutcomeDetail
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+pub struct LinkingAgentIdentifier {
+    linking_agent_identifier_type: String,
+    linking_agent_identifier_value: String,
+    linking_agent_role: String
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+pub struct LinkingObjectIdentifier {
+    linking_object_identifier_type: String,
+    linking_object_identifier_value: String,
+    linking_object_role: String
 }
 
 #[derive(Clone, PartialEq)]
@@ -35,9 +49,9 @@ pub struct Event {
     #[serde(default)]
     pub event_outcome_information: Vec<EventOutcomeInformation>,
     #[serde(default)]
-    pub linking_agent_identifier: Vec<String>,
+    pub linking_agent_identifier: Vec<LinkingAgentIdentifier>,
     #[serde(default)]
-    pub linking_object_identifier: Vec<String>,
+    pub linking_object_identifier: Vec<LinkingObjectIdentifier>,
 }
 
 pub fn validate_create_event(
