@@ -57,6 +57,16 @@ const EventDetail: FC<EventDetailProps> = ({ eventHash, onEventDeleted }) => {
         ? (
           <section>
             <div>
+                <span>
+                    <strong>eventIdentifierType: </strong>
+                </span>
+                <span>{event?.event_identifier.event_identifier_type}</span>
+            </div>
+            <div>
+                <span>
+                    <strong>eventIdentifierValue: </strong>
+                </span>
+                <span>{event?.event_identifier.event_identifier_value}</span>
             </div>
           </section>
         )
