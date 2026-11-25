@@ -2,40 +2,40 @@ use hdi::prelude::*;
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct EventIdentifier {
-    event_identifier_type: String,
-    event_identifier_value: String,
+    pub event_identifier_type: String,
+    pub event_identifier_value: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct EventDetailInformation {
-    event_detail: String,
-    event_detail_extension: String,
+    pub event_detail: String,
+    pub event_detail_extension: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct EventOutcomeDetail {
-    event_outcome_detail_note: String,
-    event_outcome_detail_extension: String,
+    pub event_outcome_detail_note: String,
+    pub event_outcome_detail_extension: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct EventOutcomeInformation {
-    event_outcome: String,
-    event_outcome_detail: EventOutcomeDetail,
+    pub event_outcome: String,
+    pub event_outcome_detail: EventOutcomeDetail,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
 pub struct LinkingAgentIdentifier {
-    linking_agent_identifier_type: String,
-    linking_agent_identifier_value: String,
-    linking_agent_role: String,
+    pub linking_agent_identifier_type: String,
+    pub linking_agent_identifier_value: String,
+    pub linking_agent_role: String,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
 pub struct LinkingObjectIdentifier {
-    linking_object_identifier_type: String,
-    linking_object_identifier_value: String,
-    linking_object_role: String,
+    pub linking_object_identifier_type: String,
+    pub linking_object_identifier_value: String,
+    pub linking_object_role: String,
 }
 
 #[derive(Clone, PartialEq)]
