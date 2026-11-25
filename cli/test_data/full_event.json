@@ -1,0 +1,29 @@
+{
+    "event_identifier": {
+        "event_identifier_type": "UUID",
+        "event_identifier_value": "4cdea8b3-94ed-4ffd-a16f-9e253c420897"
+    },
+    "event_type": "creation",
+    "event_date_time": "2026-10-29T14:32:05Z",
+    "event_detail_information": [{
+        "event_detail": "Some detail information",
+        "event_detail_extension": "Some detail extension"
+    }],
+    "event_outcome_information": [{
+        "event_outcome": "success",
+        "event_outcome_detail": {
+            "event_outcome_detail_note": "Some description of the result of the event",
+            "event_outcome_detail_extension": "Some outcome detail extension"
+        }
+    }],
+    "linking_agent_identifier": [{
+        "linking_agent_identifier_type": "UUID",
+        "linking_agent_identifier_value": "980d0c0a-00cd-44a2-bde5-5ab9d97c7b2a",
+        "linking_agent_role": "executing program"
+    }],
+    "linking_object_identifier": [{
+        "linking_object_identifier_type": "UUID",
+        "linking_object_identifier_value": "7adcbbeb-1e09-455d-884a-2a5a63aee42b",
+        "linking_object_role": "outcome"
+    }]
+}
