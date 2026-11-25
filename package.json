@@ -23,8 +23,5 @@
   },
   "hcScaffold": {
     "template": "react"
-  },
-  "dependencies": {
-    "@holochain/tryorama": "^0.19.2"
   }
 }
