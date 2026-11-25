@@ -8,34 +8,42 @@ pub struct EventIdentifier {
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct EventDetailInformation {
-    pub event_detail: String,
-    pub event_detail_extension: String,
+    #[serde(default)]
+    pub event_detail: Option<String>,
+    #[serde(default)]
+    pub event_detail_extension: Vec<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct EventOutcomeDetail {
-    pub event_outcome_detail_note: String,
-    pub event_outcome_detail_extension: String,
+    #[serde(default)]
+    pub event_outcome_detail_note: Option<String>,
+    #[serde(default)]
+    pub event_outcome_detail_extension: Vec<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct EventOutcomeInformation {
-    pub event_outcome: String,
-    pub event_outcome_detail: EventOutcomeDetail,
+    #[serde(default)]
+    pub event_outcome: Option<String>,
+    #[serde(default)]
+    pub event_outcome_detail: Vec<EventOutcomeDetail>,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
 pub struct LinkingAgentIdentifier {
     pub linking_agent_identifier_type: String,
     pub linking_agent_identifier_value: String,
-    pub linking_agent_role: String,
+    #[serde(default)]
+    pub linking_agent_role: Vec<String>,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
 pub struct LinkingObjectIdentifier {
     pub linking_object_identifier_type: String,
     pub linking_object_identifier_value: String,
-    pub linking_object_role: String,
+    #[serde(default)]
+    pub linking_object_role: Option<String>,
 }
 
 #[derive(Clone, PartialEq)]
