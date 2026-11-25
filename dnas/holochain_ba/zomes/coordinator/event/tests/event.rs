@@ -1,5 +1,3 @@
-use event::event::*;
-use event_integrity::*;
 use holochain::prelude::*;
 use holochain::sweettest::*;
 use std::path::Path;
