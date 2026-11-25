@@ -114,6 +114,7 @@ pub fn validate_delete_link_all_events(
     _target: AnyLinkableHash,
     _tag: LinkTag,
 ) -> ExternResult<ValidateCallbackResult> {
-    // TODO: add the appropriate validation rules
-    Ok(ValidateCallbackResult::Valid)
+    Ok(ValidateCallbackResult::Invalid(
+        "Event links cannot be deleted".to_string(),
+    ))
 }
