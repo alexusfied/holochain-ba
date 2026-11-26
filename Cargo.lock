@@ -1831,6 +1831,7 @@ dependencies = [
  "holochain_serialized_bytes",
  "pkcs8 0.11.0-rc.11",
  "serde",
+ "serde_json",
  "tokio",
 ]
 
