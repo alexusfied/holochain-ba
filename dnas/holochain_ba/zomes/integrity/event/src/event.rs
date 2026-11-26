@@ -62,11 +62,19 @@ pub struct Event {
     pub linking_object_identifier: Vec<LinkingObjectIdentifier>,
 }
 
+fn validate_event_identifier(id_type: &str, id_value: &str) -> bool {
+    id_type == "UUID" && uuid::Uuid::try_parse(id_value).is_ok()
+}
+
 pub fn validate_create_event(
     _action: EntryCreationAction,
     _event: Event,
 ) -> ExternResult<ValidateCallbackResult> {
-    // TODO: add the appropriate validation rules
+    if !validate_event_identifier(&_event.event_identifier.event_identifier_type, &_event.event_identifier.event_identifier_value) {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Invalid event identifier: The type has to be UUID and the value a valid UUID".to_string(),
+        )); 
+    }
     Ok(ValidateCallbackResult::Valid)
 }
 
