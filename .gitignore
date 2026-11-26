@@ -8,6 +8,7 @@
 # build
 /dist/
 /target/
+/cli/target/
 /.cargo/
 
 # package manager
