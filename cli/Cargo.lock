@@ -149,6 +149,7 @@ dependencies = [
  "event_integrity",
  "holochain_client",
  "holochain_types 0.7.1",
+ "scheduled-thread-pool",
  "serde",
  "serde_json",
  "tokio",

@@ -12,5 +12,5 @@ holochain_types = "0.7.1"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.154"
 tokio = "1.54.1"
-scheduled_thread_pool = "=0.2.7" # 0.2.8 pulls parking_lot 0.13 (needs Rust 1.95); holonix 0.6 ships 1.94 
+scheduled-thread-pool = "=0.2.7" # 0.2.8 pulls parking_lot 0.13 (needs Rust 1.95); holonix 0.6 ships 1.94 
 event_integrity = { path = "../dnas/holochain_ba/zomes/integrity/event" }

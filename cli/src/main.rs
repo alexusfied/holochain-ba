@@ -1,64 +1,12 @@
 use anyhow::Ok;
 use clap::Parser;
-use serde::{Deserialize, Serialize};
 use std::{fs::File, io::BufReader};
 
 use holochain_client::{
     AdminWebsocket, AppWebsocket, AuthorizeSigningCredentialsPayload, CellInfo, ClientAgentSigner, ExternIO, IssueAppAuthenticationTokenPayload, ZomeCallTarget
 };
 
-#[derive(Debug, Deserialize, Serialize)]
-struct EventIdentifier {
-    event_identifier_type: String,
-    event_identifier_value: String
-}
-
-#[derive(Debug, Deserialize, Serialize)]
-struct EventDetailInformation {
-    event_detail: String,
-    event_detail_extension: String
-}
-
-#[derive(Debug, Deserialize, Serialize)]
-struct EventOutcomeDetail {
-    event_outcome_detail_note: String,
-    event_outcome_detail_extension: String
-}
-
-#[derive(Debug, Deserialize, Serialize)]
-struct EventOutcomeInformation {
-    event_outcome: String,
-    event_outcome_detail: EventOutcomeDetail
-}
-
-#[derive(Debug, Deserialize, Serialize)]
-struct LinkingAgentIdentifier {
-    linking_agent_identifier_type: String,
-    linking_agent_identifier_value: String,
-    linking_agent_role: String
-}
-
-#[derive(Debug, Deserialize, Serialize)]
-struct LinkingObjectIdentifier {
-    linking_object_identifier_type: String,
-    linking_object_identifier_value: String,
-    linking_object_role: String
-}
-
-#[derive(Debug, Deserialize, Serialize)]
-struct Event {
-    event_identifier: EventIdentifier,
-    event_type: String,
-    event_date_time: String,
-    #[serde(default)]
-    event_detail_information: Vec<EventDetailInformation>,
-    #[serde(default)]
-    event_outcome_information: Vec<EventOutcomeInformation>,
-    #[serde(default)]
-    linking_agent_identifier: Vec<LinkingAgentIdentifier>,
-    #[serde(default)]
-    linking_object_identifier: Vec<LinkingObjectIdentifier>,
-}
+use event_integrity::Event;
 
 #[derive(Parser)]
 struct Arguments {
