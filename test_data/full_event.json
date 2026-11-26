@@ -3,7 +3,7 @@
         "event_identifier_type": "UUID",
         "event_identifier_value": "4cdea8b3-94ed-4ffd-a16f-9e253c420897"
     },
-    "event_type": "creation",
+    "event_type": "ingestion",
     "event_date_time": "2026-10-29T14:32:05Z",
     "event_detail_information": [{
         "event_detail": "Some detail information",

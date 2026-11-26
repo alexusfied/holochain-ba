@@ -29,13 +29,46 @@ fn validate_event_identifier_unique(action: &EntryCreationAction, id_value: &str
     }
 
     return Ok(true)
-    
+}
+
+fn validate_event_type(event_type: &str) -> bool {
+    if !matches!(event_type, "ingestion" | "migration" | "validation") {
+        return false;
+    }
+
+    true
+}
+
+fn validate_event_outcome(event_outcome: &str) -> bool {
+    if !matches!(event_outcome, "success" | "failure") {
+        return false;
+    }
+
+    true
 }
 
 pub fn validate_create_event(
     action: EntryCreationAction,
     event: Event,
 ) -> ExternResult<ValidateCallbackResult> {
+    if !validate_event_type(&event.event_type) {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Invalid event type: Has to be either ingestion, migration or validation".to_string()
+        ));
+    }
+
+    for outcome_info in event.event_outcome_information {
+        if let Some(event_outcome) = &outcome_info.event_outcome {
+            if !validate_event_outcome(event_outcome) {
+                return Ok(ValidateCallbackResult::Invalid(
+                    "Invalid event outcome: Has to be either success or failure".to_string()
+                ));
+            }
+        }
+
+    }
+
+
     if !validate_event_identifier_format(&event.event_identifier.event_identifier_type, &event.event_identifier.event_identifier_value) {
         return Ok(ValidateCallbackResult::Invalid(
             "Invalid event identifier: The type has to be UUID and the value a valid UUID".to_string(),
