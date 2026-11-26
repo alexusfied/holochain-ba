@@ -63,35 +63,53 @@ pub struct Event {
     pub linking_object_identifier: Vec<LinkingObjectIdentifier>,
 }
 
+fn same_uuid(a: &str, b: &str) -> bool {
+    match (uuid::Uuid::try_parse(a), uuid::Uuid::try_parse(b)) {
+        (Ok(x), Ok(y)) => x == y,
+        _ => false
+    }
+}
+
 fn validate_event_identifier_format(id_type: &str, id_value: &str) -> bool {
     id_type == "UUID" && uuid::Uuid::try_parse(id_value).is_ok()
 }
 
-fn validate_event_identifier_unique(action: Action, id_value: &str) -> bool {
-    let result: Vec<RegisterAgentActivity> = must_get_agent_activity(action.author().clone(), ChainFilter::new(action.prev_action().clone())).expect("Getting chain actions failed");
+fn validate_event_identifier_unique(action: &EntryCreationAction, id_value: &str) -> ExternResult<bool> {
+    let result: Vec<RegisterAgentActivity> = must_get_agent_activity(action.author().clone(), ChainFilter::new(action.prev_action().clone()))?;
 
-    let event_entry_def = &EntryType::App(UnitEntryTypes::Event.try_into().expect("Could not get entry type for event"));
-    let conflicting_items = result
+    let event_entry_def = &EntryType::App(UnitEntryTypes::Event.try_into()?);
+    let entry_actions = result
         .iter()
-        .filter(|o| o.action.hashed.content.entry_type() == Some(event_entry_def))
-        .count();
+        .filter(|o| o.action.hashed.content.entry_type() == Some(event_entry_def));
+
+
+    for action in entry_actions {
+        if let Some(entry_hash) = action.action.hashed.content.entry_hash() {
+            let prev: Event = must_get_entry(entry_hash.clone())?.content.try_into()?;
+            if same_uuid(&prev.event_identifier.event_identifier_value, id_value) { return Ok(false); }
+        }
+    }
+
+    return Ok(true)
     
-    conflicting_items == 0
 }
 
 pub fn validate_create_event(
-    _action: EntryCreationAction,
-    _event: Event,
+    action: EntryCreationAction,
+    event: Event,
 ) -> ExternResult<ValidateCallbackResult> {
-    if !validate_event_identifier_format(&_event.event_identifier.event_identifier_type, &_event.event_identifier.event_identifier_value) {
+    if !validate_event_identifier_format(&event.event_identifier.event_identifier_type, &event.event_identifier.event_identifier_value) {
         return Ok(ValidateCallbackResult::Invalid(
             "Invalid event identifier: The type has to be UUID and the value a valid UUID".to_string(),
         )); 
-    } else if !validate_event_identifier_unique(&_event.event_identifier.event_identifier_value) {
+    } 
+
+    if !validate_event_identifier_unique(&action, &event.event_identifier.event_identifier_value)? {
         return Ok(ValidateCallbackResult::Invalid(
             "Event identifier is already used in the chain".to_string(),
         ));
     }
+
     Ok(ValidateCallbackResult::Valid)
 }
 
