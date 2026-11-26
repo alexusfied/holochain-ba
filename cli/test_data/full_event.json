@@ -7,23 +7,23 @@
     "event_date_time": "2026-10-29T14:32:05Z",
     "event_detail_information": [{
         "event_detail": "Some detail information",
-        "event_detail_extension": "Some detail extension"
+        "event_detail_extension": ["Some detail extension"]
     }],
     "event_outcome_information": [{
         "event_outcome": "success",
-        "event_outcome_detail": {
+        "event_outcome_detail": [{
             "event_outcome_detail_note": "Some description of the result of the event",
-            "event_outcome_detail_extension": "Some outcome detail extension"
-        }
+            "event_outcome_detail_extension": ["Some outcome detail extension"]
+        }]
     }],
     "linking_agent_identifier": [{
         "linking_agent_identifier_type": "UUID",
         "linking_agent_identifier_value": "980d0c0a-00cd-44a2-bde5-5ab9d97c7b2a",
-        "linking_agent_role": "executing program"
+        "linking_agent_role": ["executing program"]
     }],
     "linking_object_identifier": [{
         "linking_object_identifier_type": "UUID",
         "linking_object_identifier_value": "7adcbbeb-1e09-455d-884a-2a5a63aee42b",
-        "linking_object_role": "outcome"
+        "linking_object_role": ["outcome"]
     }]
 }

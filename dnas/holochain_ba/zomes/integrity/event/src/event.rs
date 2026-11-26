@@ -43,7 +43,7 @@ pub struct LinkingObjectIdentifier {
     pub linking_object_identifier_type: String,
     pub linking_object_identifier_value: String,
     #[serde(default)]
-    pub linking_object_role: Option<String>,
+    pub linking_object_role: Vec<String>,
 }
 
 #[derive(Clone, PartialEq)]
