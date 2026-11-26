@@ -1,5 +1,7 @@
 pub mod event;
+pub mod types;
 pub use event::*;
+pub use types::*;
 use hdi::prelude::*;
 
 #[derive(Serialize, Deserialize)]
