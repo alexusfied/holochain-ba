@@ -1,4 +1,5 @@
 use hdi::prelude::*;
+use crate::UnitEntryTypes;
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct EventIdentifier {
@@ -62,18 +63,34 @@ pub struct Event {
     pub linking_object_identifier: Vec<LinkingObjectIdentifier>,
 }
 
-fn validate_event_identifier(id_type: &str, id_value: &str) -> bool {
+fn validate_event_identifier_format(id_type: &str, id_value: &str) -> bool {
     id_type == "UUID" && uuid::Uuid::try_parse(id_value).is_ok()
+}
+
+fn validate_event_identifier_unique(action: Action, id_value: &str) -> bool {
+    let result: Vec<RegisterAgentActivity> = must_get_agent_activity(action.author().clone(), ChainFilter::new(action.prev_action().clone())).expect("Getting chain actions failed");
+
+    let event_entry_def = &EntryType::App(UnitEntryTypes::Event.try_into().expect("Could not get entry type for event"));
+    let conflicting_items = result
+        .iter()
+        .filter(|o| o.action.hashed.content.entry_type() == Some(event_entry_def))
+        .count();
+    
+    conflicting_items == 0
 }
 
 pub fn validate_create_event(
     _action: EntryCreationAction,
     _event: Event,
 ) -> ExternResult<ValidateCallbackResult> {
-    if !validate_event_identifier(&_event.event_identifier.event_identifier_type, &_event.event_identifier.event_identifier_value) {
+    if !validate_event_identifier_format(&_event.event_identifier.event_identifier_type, &_event.event_identifier.event_identifier_value) {
         return Ok(ValidateCallbackResult::Invalid(
             "Invalid event identifier: The type has to be UUID and the value a valid UUID".to_string(),
         )); 
+    } else if !validate_event_identifier_unique(&_event.event_identifier.event_identifier_value) {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Event identifier is already used in the chain".to_string(),
+        ));
     }
     Ok(ValidateCallbackResult::Valid)
 }
