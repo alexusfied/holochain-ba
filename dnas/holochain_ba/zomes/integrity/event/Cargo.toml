@@ -12,3 +12,4 @@ hdi = { workspace = true }
 serde = { workspace = true }
 holochain_serialized_bytes = { workspace = true }
 uuid = { version = "1", default-features = false }
+chrono = "0.4.45"

@@ -1859,6 +1859,7 @@ dependencies = [
 name = "event_integrity"
 version = "0.0.1"
 dependencies = [
+ "chrono",
  "hdi",
  "holochain_serialized_bytes",
  "serde",

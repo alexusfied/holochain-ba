@@ -1,5 +1,6 @@
 use hdi::prelude::*;
 use crate::*;
+use chrono::DateTime;
 
 fn same_uuid(a: &str, b: &str) -> bool {
     match (uuid::Uuid::try_parse(a), uuid::Uuid::try_parse(b)) {
@@ -47,6 +48,10 @@ fn validate_event_outcome(event_outcome: &str) -> bool {
     true
 }
 
+fn validate_event_date_time(event_date_time: &str) -> bool {
+    DateTime::parse_from_rfc3339(event_date_time).is_ok()
+}
+
 pub fn validate_create_event(
     action: EntryCreationAction,
     event: Event,
@@ -54,6 +59,12 @@ pub fn validate_create_event(
     if !validate_event_type(&event.event_type) {
         return Ok(ValidateCallbackResult::Invalid(
             "Invalid event type: Has to be either ingestion, migration or validation".to_string()
+        ));
+    }
+
+    if !validate_event_date_time(&event.event_date_time) {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Invalid event date time: Timestamp has to follow ISO 8601 format".to_string()
         ));
     }
 
